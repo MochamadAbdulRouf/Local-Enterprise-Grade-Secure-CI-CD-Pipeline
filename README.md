@@ -104,15 +104,23 @@ Jika membuka browser http://<IP-VM-1>:8080 (Jenkins) dan http://<IP-VM-1>:9000 (
 ssh-keygen -t rsa
 ```
 
-12. Edit file `authorized_keys` Paste Public Key dari container Jenkins
+12. Edit file `authorized_keys` Paste Public Key dari container Jenkins --> lalu simpan file 
+```bash
+vi .ssh/authorized_keys
+```
 
-13. Set permission supaya Jenkins bisa langsung login ke vm 2 atau node 1 tanpa menggunakan password
+13. Lalu Restart ssh
+```bash
+sudo systemctl restart ssh 
+```
+
+14. Set permission supaya Jenkins bisa langsung login ke vm 2 atau node 1 tanpa menggunakan password
 ```bash
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
 ```
 
-14. Setup firewall (opsional namun disarankan)
+15. Setup firewall (opsional namun disarankan)
 ```bash
 sudo ufw allow ssh
 
@@ -123,7 +131,7 @@ sudo ufw enable
 # Tekan 'y' jika ditanya konfirmasi
 ```
 
-15. Di VM 1 masuk ke container Jenkins dan Coba ssh ke vm 2 ganti user dan ip vm 2 dengan konfigurasi yang tercatat di VM 2
+16. Di VM 1 masuk ke container Jenkins dan Coba ssh ke vm 2 ganti user dan ip vm 2 dengan konfigurasi yang tercatat di VM 2
 ```bash
 docker exec -it jenkins bash
 
