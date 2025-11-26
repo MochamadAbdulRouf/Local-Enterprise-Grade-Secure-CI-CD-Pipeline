@@ -39,7 +39,7 @@ pipeline {
                             docker stop my-app || true
                             docker rm my-app || true
                             docker run -d --name my-app -p 8082:3002 ${DOCKER_IMAGE}:6
-                        '
+                        '   
                     """
                 }
             }

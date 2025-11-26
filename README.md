@@ -145,3 +145,59 @@ note:
 - jika masuk ke vm menggunakan password artinya belum berhasil coba cek isi file `authorized_keys` pastikan isi `public_key` container jenkins sama dan tidak ada typo
 - jika `connection_refused` cek ip address atau firewall
 
+
+### VM 1 / Master Node
+
+17. Pastikan sudah memiliki code aplikasi yang telah dibuat
+18. Berikan izin container jenkins untuk mengakses Docker Socket 
+```bash
+sudo chmod 666 /var/run/docker.sock
+```
+
+19. Buat automation CI/CD Pipeline menggunakan Jenkins seperti di file `Jenkinsfile`
+20. Pastikan setelah itu sudah Melakukan push ke repo github atau bisa gunakan repo saya ini untuk uji coba implementasi
+21. Menambahkan Credentials ke Jenkins supaya Jenkins memiliki akses ke Docker Hub dan Login SSH ke VM-2
+22. Buka Dashboard Jenkins (http://<IP-VM-1>:8080) -> Manage Jenkins -> Credentials -> System -> Global credentials (unrestricted) -> Add Credentials.
+23. Tambah credentials: Docker Hub
+- Kind: Username with password
+- Scope: Global
+- Username: (Username Docker Hub Anda)
+- Password: (Password Docker Hub Anda)
+- ID: docker-hub-login (Harus sama persis dengan yang di Jenkinsfile)
+- Description: Akun Docker Hub (optional)
+- Klik Create.
+24. Menambahkan Credentials untuk SSH Key ke VM-2
+- Mengambil Private Key dari Container Jenkins dulu
+```bash
+docker exec jenkins cat /var/jenkins_home/.ssh/id_rsa
+```
+- Kembali ke Browser Jenkins (Add Credentials lagi):
+- Kind: SSH Username with private key
+- Scope: Global
+- ID: vm2-ssh-key (Harus sama persis dengan yang di Jenkinsfile)
+- Username: (Username user di VM-2, misal ubuntu atau nama user anda)
+- Private Key: Pilih Enter directly -> Tekan Add -> Paste teks key yang tadi dicopy.
+- Passphrase: (Kosongkan jika saat generate key anda tidak isi password).
+- Klik Create.
+25. Membuat Job Pipeline
+- Di Dashboard Jenkins, klik New Item.
+- Masukkan nama: Project-1 (example).
+- Pilih Pipeline. Klik OK.
+- Scroll ke bawah bagian Pipeline Definition:
+- Pilih Pipeline script from SCM.
+- SCM: Git.
+- Repository URL: Masukkan Link GitHub Repo (misal: https://github.com/MochamadAbdulRouf/Local-Enterprise-Grade-Secure-CI-CD-Pipeline).
+- Branch Specifier: */main (atau */master tergantung di repo).
+- Script Path: Jenkinsfile (biarkan default).
+- Klik Save.
+26. Menjalankan Pipeline
+- Kembali ke menu Project pipeline
+- Di menu sebelah kiri klik button `Build Now`
+- Di Bagian kiri bawah menu credentials akan ada history Build klik icon panah yang mengarah ke bawah 
+- Lalu Klik `Console Output`
+- Di situ akan terlihat progress Pipeline yang sedang berjalan secara live 
+
+Example Documentation:
+Successfuly Implementation Pipeline
+![jenkins-img](./image/jenkins-1.png)
+![jenkins-img](./image/jenkins-4.png)
