@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Note Taking App</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f6f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 600px;
+      background: #fff;
+      margin-top: 40px;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .input-box {
+      display: flex;
+      gap: 10px;
+    }
+
+    .input-box textarea {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
+      height: 80px;
+    }
+
+    .input-box button {
+      padding: 0 20px;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .input-box button:hover {
+      background: #3b35c7;
+    }
+
+    .note {
+      background: #fafafa;
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 5px solid #4f46e5;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .note p {
+      margin: 0;
+      white-space: pre-wrap;
+      font-size: 15px;
+      color: #444;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: #ef4444;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .delete-btn:hover {
+      background: #dc2626;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>📝 Note Taking App</h1>
+
+    <div class="input-box">
+      <textarea id="noteInput" placeholder="Tulis catatan baru..."></textarea>
+      <button onclick="addNote()">Tambah</button>
+    </div>
+
+    <div id="notesContainer"></div>
+  </div>
+
+  <script>
+    function loadNotes() {
+      const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+      const container = document.getElementById("notesContainer");
+      container.innerHTML = "";
+
+      savedNotes.forEach((note, index) => {
+        const div = document.createElement("div");
+        div.className = "note";
+        div.innerHTML = `
+          <p>${note}</p>
+          <button class="delete-btn" onclick="deleteNote(${index})">Hapus</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function addNote() {
+      const noteText = document.getElementById("noteInput").value.trim();
+      if (noteText === "") return alert("Catatan tidak boleh kosong!");
+
+      const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+      savedNotes.push(noteText);
+
+      localStorage.setItem("notes", JSON.stringify(savedNotes));
+      document.getElementById("noteInput").value = "";
+      loadNotes();
+    }
+
+    function deleteNote(index) {
+      const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+      savedNotes.splice(index, 1);
+      localStorage.setItem("notes", JSON.stringify(savedNotes));
+      loadNotes();
+    }
+
+    // Load saat halaman dibuka
+    loadNotes();
+  </script>
+
+</body>
+</html>
