@@ -190,6 +190,7 @@ docker exec jenkins cat /var/jenkins_home/.ssh/id_rsa
 - Branch Specifier: */main (atau */master tergantung di repo).
 - Script Path: Jenkinsfile (biarkan default).
 - Klik Save.
+
 26. Menjalankan Pipeline
 - Kembali ke menu Project pipeline
 - Di menu sebelah kiri klik button `Build Now`
@@ -203,3 +204,49 @@ Successfuly Implementation Pipeline
 ![jenkins-img](./image/jenkins-4.png)
 ![jenkins-img](./image/jenkins-8.png)
 ![jenkins-img](./image/jenkins-9.png)
+
+## Automated Code Quality Analysis with SonarQube Integration in Jenkins Pipelines
+SonarQube digunakan sebagai alat untuk menganalisis sebuah code pemrograman dari bugs, celah keamanan(Vurnerabilities), dan Code smells "Kode yang bisa berjalan namun susah untuk dibaca".Skenario dari project ini Jika SonarQube menilai kode dengan grade C atau D, Pipeline akan STOP otomatis.Jenkins menolak membuat Docker Image dan Aplikasi tidak akan di deploy ke VM 2
+
+27. Buka Browser login ke `http://<IP-VM-1>:9000` example = `http://10.10.10.18:9000`
+28. Login secara default dengan username dan password adalah admin lalu ganti sesuaikan
+29. Jika sudah masuk ke dashboard SonarQube, Klik `Create Project Manually` 
+30. Masukan rincian berikut
+- Project Display Name: devops-project (example)
+- Project Key: devops-project
+- Main Branch: main (sesuaikan dengan branch yang ada di github repository)
+- Klik Set Up
+
+31. Di bagian untuk memilih menganalisis repository mana, Klik `Project Locally` 
+32. Masukan Token Name dengan nama `jenkins-token` lalu klik generate 
+33. Salin token yang telah di generate oleh SonarQube Contoh seperti berikut `sqp_6...`
+34. Simpan token di Jenkins dengan tahap seperti berikut
+- Buka Dashboard Jenkins -> klik Manage Jenkins -> Klik Credentials
+- Di bagian Stores Scoped to Jenkins klik global
+![doc-1](./image/dok1.png)
+- Klik Add Credentials
+- Kind: Secret text
+- Secret
+- isi ID seperti berikut `sonarqube-token`
+- Klik create 
+
+35. Sambungkan Jenkins ke Server SonarQube
+- Klik Manage Jenkins -> Systems
+- Cari Bagian SonarQube Servers
+- Centang Environment Variables
+- Klik Add SonarQube
+- Berikut contoh konfigurasinya
+![doc-2](./image/dok2.png)
+- Klik Save
+note: Nama server samakan dan jangan sampai typo, Ini dipakai di script atau alur pipelinenya nanti.Dan untuk Server URL di isi `http://10.10.10.18:9000`(Memakai ip yang sama karena satu network dengan Docker).Server Authentication Token pilih `sonarqube-token` jika muncul atau pilih deskripsi dari ID token tersebut.
+
+36. Pastikan Scanner Tool Terinstall
+- Klik Manage Jenkins -> Tools
+- Cari SonarQube Scanner Installations
+- Klik Add SonarQube Scanner
+- Name: SonarScanner (jangan typo)
+- Centang Install automatically
+- Klik save
+![doc-3](./image/dok3.png)
+
+37. Update Jenkinsfile seperti yang di repo (Kode sudah saya update bagian stage Quality Check, didalam kode tersebut ada implementasi SonarQube menggunakan Jenkins)
