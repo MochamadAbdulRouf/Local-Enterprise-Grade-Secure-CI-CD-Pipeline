@@ -25,11 +25,7 @@ pipeline {
                     def scannerHome = tool 'SonarScanner'
 
                     withSonarQubeEnv('sonar-server') {
-
-                        sh "
-                        ${scannerHome}/bin/sonar-scanner 
-                        -Dsonar.projectKey=devops-project
-                        "
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=devops-project"
                     }
                 }
             }
