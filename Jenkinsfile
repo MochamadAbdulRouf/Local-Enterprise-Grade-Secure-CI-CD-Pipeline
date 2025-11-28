@@ -19,6 +19,25 @@ pipeline {
                 checkout scm 
             }
         }
+        stage('Quality Check (SonarQube)') {
+            steps {
+                script {
+                    def scannerHome = tool 'SonarScanner'
+
+                    withSonarQubeEnv('sonar-server') {
+
+                        sh """
+                        #{scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=devops-project \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.login=$SONAR_AUTH_TOKEN
+                        """
+                    }
+                }
+            }
+        }
+
         stage('Build Image') {
             steps {
                 script {
