@@ -256,3 +256,6 @@ note: Nama server samakan dan jangan sampai typo, Ini dipakai di script atau alu
 39. Checkout Console Output yang dihasilkan
 40. Lihat semua proses pipeline yang berjalan pastikan check Stage Quality Check tidak terdapat error seperti berikut.
 ![doc-4](./image/dok4.png)
+![doc-5](./image/dok5.png)
+![doc-6](./image/dok6.png)
+![doc-7](./image/dok7.png)
