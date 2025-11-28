@@ -1,26 +1,26 @@
 # Local-Enterprise-Grade-Secure-CI-CD-Pipeline
 Proyek ini mencakup fase Code Integration, Quality Inspection, Security Scanning, Containerization, hingga Automated Deployment ke server produksi yang terpisah.Skenario Project:
 
-- Stage 1: Checkout
+1. Stage 1: Checkout
 Mengambil kode terbaru dari repository Git
 Otomatis menggunakan branch yang di-trigger
 
-- Stage 2: Quality Check (SonarQube)
-1. Menggunakan SonarScanner tool yang sudah dikonfigurasi di Jenkins
-2. Menjalankan analisis kode dengan project key 'devops-project'
-3. Mengecek kualitas kode, bug, security issues
-4. Hasilnya bisa dilihat di SonarQube dashboard
+2. Stage 2: Quality Check (SonarQube)
+- Menggunakan SonarScanner tool yang sudah dikonfigurasi di Jenkins
+- Menjalankan analisis kode dengan project key 'devops-project'
+- Mengecek kualitas kode, bug, security issues
+- Hasilnya bisa dilihat di SonarQube dashboard
 
-- Stage 3: Build Image and Push Image 
-1. Login ke Docker Hub menggunakan kredensial 'docker-hub-login'
-2. Build Docker image dengan tag:
+3. Stage 3: Build Image and Push Image 
+- Login ke Docker Hub menggunakan kredensial 'docker-hub-login'
+- Build Docker image dengan tag:
    - mochabdulrouf/note-taking-app:BUILD_NUMBER (misal: :1, :2, :3)
    - mochabdulrouf/note-taking-app:latest
-3. Push image ke Docker Hub
+- Push image ke Docker Hub
 
-- Stage 4: Deploy to VM Node
-1. SSH ke VM (10.10.10.23) dengan user 'rouf'
-2. Melakukan:
+4. Stage 4: Deploy to VM Node
+- SSH ke VM (10.10.10.23) dengan user 'rouf'
+- Melakukan:
    - Pull image Docker terbaru
    - Stop container lama (jika ada)
    - Hapus container lama
