@@ -27,8 +27,8 @@ pipeline {
                     withSonarQubeEnv('sonar-server') {
 
                         sh "
-                        ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=devops-project \
+                        ${scannerHome}/bin/sonar-scanner 
+                        -Dsonar.projectKey=devops-project
                         "
                     }
                 }
