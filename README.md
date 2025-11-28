@@ -226,8 +226,9 @@ SonarQube digunakan sebagai alat untuk menganalisis sebuah code pemrograman dari
 ![doc-1](./image/dok1.png)
 - Klik Add Credentials
 - Kind: Secret text
-- Secret
+- Secret : `sqp_6...`
 - isi ID seperti berikut `sonarqube-token`
+- Deskripsi: token from sonarqube
 - Klik create 
 
 35. Sambungkan Jenkins ke Server SonarQube
@@ -250,3 +251,8 @@ note: Nama server samakan dan jangan sampai typo, Ini dipakai di script atau alu
 ![doc-3](./image/dok3.png)
 
 37. Update Jenkinsfile seperti yang di repo (Kode sudah saya update bagian stage Quality Check, didalam kode tersebut ada implementasi SonarQube menggunakan Jenkins)
+
+38. Jalankan Pipeline -> Masuk ke project pipeline -> Klik Build Now
+39. Checkout Console Output yang dihasilkan
+40. Lihat semua proses pipeline yang berjalan pastikan check Stage Quality Check tidak terdapat error seperti berikut.
+![doc-4](./image/dok4.png)
