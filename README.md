@@ -206,6 +206,7 @@ Successfuly Implementation Pipeline
 ![jenkins-img](./image/jenkins-9.png)
 
 ## Automated Code Quality Analysis with SonarQube Integration in Jenkins Pipelines
+![tp-project](./image/jenkins-tp.jpeg)
 SonarQube digunakan sebagai alat untuk menganalisis sebuah code pemrograman dari bugs, celah keamanan(Vurnerabilities), dan Code smells "Kode yang bisa berjalan namun susah untuk dibaca".Skenario dari project ini Jika SonarQube menilai kode dengan grade C atau D, Pipeline akan STOP otomatis.Jenkins menolak membuat Docker Image dan Aplikasi tidak akan di deploy ke VM 2
 
 27. Buka Browser login ke `http://<IP-VM-1>:9000` example = `http://10.10.10.18:9000`
