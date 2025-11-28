@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('Build Image') {
+        stage('Build Image and Push Image') {
             steps {
                 script {
                     docker.withRegistry('', DOCKER_CREDS_ID) {
