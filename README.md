@@ -259,3 +259,4 @@ note: Nama server samakan dan jangan sampai typo, Ini dipakai di script atau alu
 ![doc-5](./image/dok5.png)
 ![doc-6](./image/dok6.png)
 ![doc-7](./image/dok7.png)
+![doc-8](./image/dok8.png)
