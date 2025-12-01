@@ -1,4 +1,4 @@
-# Local-Enterprise-Grade-Secure-CI-CD-Pipeline
+# CI/CD Pipeline Security Improvement Project
 Proyek ini mencakup fase Code Integration, Quality Inspection, Security Scanning, Containerization, hingga Automated Deployment ke server produksi yang terpisah.Skenario Project:
 
 1. Stage 1: Checkout
